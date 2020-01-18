@@ -9,7 +9,7 @@ AUTH0_DOMAIN = 'dev-erbqtr7i.auth0.com'
 ALGORITHMS = ['RS256']
 API_AUDIENCE = 'casting_agency'
 
-## AuthError Exception
+# AuthError Exception
 '''
 AuthError Exception
 A standardized way to communicate auth failure modes
@@ -20,7 +20,7 @@ class AuthError(Exception):
         self.status_code = status_code
 
 
-## Auth Header
+# Auth Header
 
 '''
 @TODO implement get_token_auth_header() method
@@ -86,10 +86,6 @@ def check_permissions(permission, payload):
     return True
 
 '''
-@TODO implement verify_decode_jwt(token) method
-    @INPUTS
-        token: a json web token (string)
-
     it should be an Auth0 token with key id (kid)
     it should verify the token using Auth0 /.well-known/jwks.json
     it should decode the payload from the token
@@ -127,9 +123,9 @@ def verify_decode_jwt(token):
                 audience=API_AUDIENCE,
                 issuer='https://' + AUTH0_DOMAIN + '/'
             )
-
-            return payload
-
+            
+            return payloa
+        
         except jwt.ExpiredSignatureError:
             raise AuthError({
                 'code': 'token_expired',
@@ -152,10 +148,6 @@ def verify_decode_jwt(token):
             }, 400)
 
 '''
-@TODO implement @requires_auth(permission) decorator method
-    @INPUTS
-        permission: string permission (i.e. 'post:drink')
-
     it should use the get_token_auth_header method to get the token
     it should use the verify_decode_jwt method to decode the jwt
     it should use the check_permissions method validate claims and check the requested permission
