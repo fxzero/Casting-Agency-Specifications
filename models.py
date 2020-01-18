@@ -130,3 +130,4 @@ class Actor(db.Model):
 
     def __repr__(self):
         return json.dumps(self.format())
+    
