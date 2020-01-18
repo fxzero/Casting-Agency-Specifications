@@ -122,11 +122,13 @@ I have already deployed the API in heroku and can use it directly. The host is:
 
 https://casting-agency-fxzero.herokuapp.com/movie
 
-You can test the API like this:
+The token is in the `setup.sh`, you can test the API like this:
 
 ```bash
-curl -H "Authorization: Bearer ${TOKEN}" https://casting-agency-fxzero.herokuapp.com/movies | jq 
+source setup.sh
+curl -H "Authorization: Bearer ${TOKEN_EP}" https://casting-agency-fxzero.herokuapp.com/movies | jq 
 ```
+
 
 ## API document
 ```
@@ -177,6 +179,15 @@ PATCH '/actors/<actor_id>'
 - Request Arguments: name, age, gender
 {"name":"actor2", "age":31, "gender":"M"}
 - Returns: The actor info which we updated with this request.
+{
+  "actors": {
+    "age": 31,
+    "gender": "M",
+    "id": 1,
+    "name": "actor2"
+  },
+  "success": true
+}
 
 DELETE '/actors/<actor_id>'
 - Delete a actor
@@ -242,7 +253,8 @@ DELETE '/movies/<movie_id>'
 
 ## Testing
 To run the tests, run
-```
+
+```python
 pytest test_app.py
 ```
 
