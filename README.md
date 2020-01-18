@@ -6,25 +6,45 @@ The Casting Agency models a company that is responsible for creating movies and 
 Models:
 
 Movies with attributes title and release date
+
 Actors with attributes name, age and gender
+
 Endpoints:
+
 GET /actors and /movies
+
 DELETE /actors/ and /movies/
+
 POST /actors and /movies and
+
 PATCH /actors/ and /movies/
+
 Roles:
+
 Casting Assistant
+
 Can view actors and movies
+
 Casting Director
+
 All permissions a Casting Assistant has and…
+
 Add or delete an actor from the database
+
 Modify actors or movies
+
 Executive Producer
+
 All permissions a Casting Director has and…
+
 Add or delete a movie from the database
+
 Tests:
+
 One test for success behavior of each endpoint
+
 One test for error behavior of each endpoint
+
 At least two tests of RBAC for each role
 
 ## Getting Started
@@ -71,8 +91,6 @@ When testing locally, models.py should be:
 database_filename = "database.db"
 project_dir = os.path.dirname(os.path.abspath(__file__))
 database_path = "sqlite:///{}".format(os.path.join(project_dir, database_filename))
-
-# db = SQLAlchemy()
 ```
 When testing on heroku, models.py should be:
 ```python
@@ -81,8 +99,6 @@ database_path = os.environ['DATABASE_URL']
 # database_filename = "database.db"
 # project_dir = os.path.dirname(os.path.abspath(__file__))
 # database_path = "sqlite:///{}".format(os.path.join(project_dir, database_filename))
-
-db = SQLAlchemy()
 ```
 
 From the working folder in terminal run:
@@ -129,13 +145,38 @@ GET '/actors'
 - Get all actors' information
 - Request Arguments: None
 - Returns: A list contains all the actors' info.
-
+{
+  "actors": [
+    {
+      "age": 31,
+      "gender": "M",
+      "id": 1,
+      "name": "actor1"
+    }
+  ],
+  "success": true
+}
 
 POST '/actors'
 - Add a actor
+- Request Arguments: name, age, gender
+{"name":"actor1", "age":31, "gender":"M"}
+- Returns: The actor info which we added with this request.
+{
+  "actors": {
+    "age": 31,
+    "gender": "M",
+    "id": 1,
+    "name": "actor1"
+  },
+  "success": true
+}
 
 PATCH '/actors/<actor_id>'
 - Update a actor's information
+- Request Arguments: name, age, gender
+{"name":"actor2", "age":31, "gender":"M"}
+- Returns: The actor info which we updated with this request.
 
 DELETE '/actors/<actor_id>'
 - Delete a actor
@@ -150,12 +191,44 @@ GET '/movies'
 - Get all movies' information
 - Request Arguments: None
 - Returns: A list contains all the movies' info.
+{
+  "movies": [
+    {
+      "id": 1,
+      "release_date": "2019-11-11",
+      "title": "movie1"
+    }
+  ],
+  "success": true
+}
 
 POST '/movies'
 - Add a movie
+- Request Arguments: title, release_date
+{"title":"movie1", "release_date": "2019-11-11"}
+- Returns: The movie info which we added with this request.
+{
+  "movies": {
+    "id": 1,
+    "release_date": "2019-11-11",
+    "title": "movie1"
+  },
+  "success": true
+}
 
 PATCH '/movies/<movie_id>'
 - Update a movie's information
+- Request Arguments: title, release_date
+{"title":"movie2", "release_date": "2019-11-11"}
+- Returns: The movie info which we updated with this request.
+{
+  "movies": {
+    "id": 1,
+    "release_date": "2019-11-11",
+    "title": "movie2"
+  },
+  "success": true
+}
 
 DELETE '/movies/<movie_id>'
 - Delete a movie
@@ -165,146 +238,6 @@ DELETE '/movies/<movie_id>'
   "movies": "1",
   "success": true
 }
-
-
-
-
-GET '/categories'
-- Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
-- Request Arguments: None
-- Returns: An object with a single key, categories, that contains a object of id: category_string key:value pairs. 
-{'1' : "Science",
-'2' : "Art",
-'3' : "Geography",
-'4' : "History",
-'5' : "Entertainment",
-'6' : "Sports"}
-
-GET '/questions'
-- Fetches a list of questions in which contain the info of each question
-- Request Arguments: page
-- Returns: An object with a list of questions, that contains a object of key:value pairs. 
-{
-  "categories": {
-    "1": "science",
-    "2": "art",
-    "3": "geography",
-    "4": "history",
-    "5": "entertainment",
-    "6": "sports"
-  },
-  "current_category": 3,
-  "questions": [
-    {
-      "answer": "Apollo 13",
-      "category": 5,
-      "difficulty": 4,
-      "id": 2,
-      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
-    },
-    {
-      "answer": "Tom Cruise",
-      "category": 5,
-      "difficulty": 4,
-      "id": 4,
-      "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
-    }
-  ],
-  "success": true,
-  "total_questions": 20
-}
-
-DELETE '/questions/<question_id>'
-- Delete a question
-- Request Arguments: question_id
-- Returns: The id of the question which was deleted 
-{
-  "deleted": "25",
-  "success": true
-}
-
-POST '/questions'
-- Create a new question, which will require the question and answer text, category, and difficulty score.
-- Request Arguments: question, answer, category, difficulty
-{
-    "question":"new question!",
-    "answer":"new answer!",
-    "difficulty":"4",
-    "category":"3"
-}
-- Returns: The id of the question which was added 
-{
-  "created": "25",
-  "success": true
-}
-
-POST '/questions/s'
-- get questions based on a search term. It should return any questions for whom the search term is a substring of the question.
-- Request Arguments: searchTerm
-{
-    "searchTerm":"Mirrors"
-}
-- Returns: A questions' list contaions the questions which match the search term
-{
-  "currentCategory": 3,
-  "questions": [
-    {
-      "answer": "The Palace of Versailles",
-      "category": 3,
-      "difficulty": 3,
-      "id": 14,
-      "question": "In which royal palace would you find the Hall of Mirrors?"
-    }
-  ],
-  "success": true,
-  "totalQuestions": 1
-}
-
-GET '/categories/<category_id>/questions'
-- Fetches a list of questions in which contain the info of each question that in specified category
-- Request Arguments: category_id
-- Returns: An object with a list of questions, that contains a object of key:value pairs. 
-{
-  "current_category": "1",
-  "questions": [
-    {
-      "answer": "The Liver",
-      "category": 1,
-      "difficulty": 4,
-      "id": 20,
-      "question": "What is the heaviest organ in the human body?"
-    },
-    {
-      "answer": "Alexander Fleming",
-      "category": 1,
-      "difficulty": 3,
-      "id": 21,
-      "question": "Who discovered penicillin?"
-    }
-  ],
-  "success": true,
-  "total_questions": 3
-}
-
-POST '/quizzes'
-- This endpoint should take category and previous question parameters and return a random questions within the given category, if provided, and that is not one of the previous questions.
-- Request Arguments: previous_questions, quiz_category
-{
-    "previous_questions":[22],
-    "quiz_category":{"type":"science","id":"1"}
-}
-- Returns: An object with a question, that contains a object of key:value pairs. 
-{
-  "question": {
-    "answer": "Alexander Fleming", 
-    "category": 1, 
-    "difficulty": 3, 
-    "id": 21, 
-    "question": "Who discovered penicillin?"
-  }, 
-  "success": true
-}
-```
 
 
 ## Testing
