@@ -249,7 +249,7 @@ DELETE '/movies/<movie_id>'
   "movies": "1",
   "success": true
 }
-
+```
 
 ## Testing
 To run the tests, run
