@@ -14,15 +14,15 @@ def create_app(test_config=None):
 
     return app
 
-APP = create_app()
+app = create_app()
 
-@APP.after_request
+@app.after_request
 def after_request(response):     
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,true')
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     return response
 
-@APP.route('/actors')
+@app.route('/actors')
 @requires_auth('get:actors')
 def get_actors(jwt):
     actors = Actor.query.all()
@@ -36,7 +36,7 @@ def get_actors(jwt):
         'actors': actors_list
     })
 
-@APP.route('/actors', methods=['POST'])
+@app.route('/actors', methods=['POST'])
 @requires_auth('post:actors')
 def add_actor(jwt):
     body = request.get_json()
@@ -55,7 +55,7 @@ def add_actor(jwt):
         'actors': actor.format()
     })
 
-@APP.route('/actors/<id>', methods=['PATCH'])
+@app.route('/actors/<id>', methods=['PATCH'])
 @requires_auth('patch:actors')
 def update_actor(jwt, id):
     body = request.get_json()
@@ -81,7 +81,7 @@ def update_actor(jwt, id):
         'actors': actor.format()
     })
 
-@APP.route('/actors/<id>', methods=['DELETE'])
+@app.route('/actors/<id>', methods=['DELETE'])
 @requires_auth('delete:actors')
 def delete_actor(jwt, id):
     actor = Actor.query.filter(Actor.id == id).one_or_none()
@@ -94,7 +94,7 @@ def delete_actor(jwt, id):
         'actors': id
     })
 
-@APP.route('/movies')
+@app.route('/movies')
 @requires_auth('get:movies')
 def get_movies(jwt):
     movies = Movie.query.all()
@@ -108,7 +108,7 @@ def get_movies(jwt):
         'movies': movies_list
     })
 
-@APP.route('/movies', methods=['POST'])
+@app.route('/movies', methods=['POST'])
 @requires_auth('post:movies')
 def add_movie(jwt):
     body = request.get_json()
@@ -126,7 +126,7 @@ def add_movie(jwt):
         'movies': movie.format()
     })
 
-@APP.route('/movies/<id>', methods=['PATCH'])
+@app.route('/movies/<id>', methods=['PATCH'])
 @requires_auth('patch:movies')
 def update_movie(jwt, id):
     body = request.get_json()
@@ -149,7 +149,7 @@ def update_movie(jwt, id):
         'movies': movie.format()
     })
 
-@APP.route('/movies/<id>', methods=['DELETE'])
+@app.route('/movies/<id>', methods=['DELETE'])
 @requires_auth('delete:movies')
 def delete_movie(jwt, id):
     movie = Movie.query.filter(Movie.id == id).one_or_none()
@@ -162,7 +162,7 @@ def delete_movie(jwt, id):
         'movies': id
     })
 
-@APP.errorhandler(404)
+@app.errorhandler(404)
 def not_found(error):
     return jsonify({
         "success": False, 
@@ -170,7 +170,7 @@ def not_found(error):
         "message": "resource not found"
     }), 404
 
-@APP.errorhandler(422)
+@app.errorhandler(422)
 def unprocessable(error):
     return jsonify({
         "success": False, 
@@ -178,7 +178,7 @@ def unprocessable(error):
         "message": "unprocessable"
     }), 422
 
-@APP.errorhandler(AuthError)
+@app.errorhandler(AuthError)
 def auth_error(error):
     return jsonify({
         "success": False,
@@ -187,4 +187,4 @@ def auth_error(error):
     }), error.status_code
 
 if __name__ == '__main__':
-    APP.run()
+    app.run()
