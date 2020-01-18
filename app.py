@@ -194,7 +194,6 @@ def server_error(error):
         "message": "Server error"
     }), 500
 
-
 @app.errorhandler(AuthError)
 def auth_error(error):
     return jsonify({
@@ -205,3 +204,4 @@ def auth_error(error):
 
 if __name__ == '__main__':
     app.run()
+    
