@@ -11,14 +11,11 @@ db = SQLAlchemy()
 
 # database_filename = "database.db"
 # project_dir = os.path.dirname(os.path.abspath(__file__))
-# database_path = "sqlite:///{}".format(os.path.join(project_dir, database_filename))
+# database_path = f"sqlite:///{os.path.join(project_dir, database_filename)}"
 
 # db = SQLAlchemy()
 
-'''
-setup_db(app)
-    binds a flask application and a SQLAlchemy service
-'''
+
 def setup_db(app):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -27,9 +24,6 @@ def setup_db(app):
     migrate = Migrate(app, db)
 
 
-'''
-Movie
-'''
 class Movie(db.Model):
     __tablename__ = 'Movie'
 
@@ -78,6 +72,7 @@ class Movie(db.Model):
 
     def __repr__(self):
         return json.dumps(self.format())
+
 
 class Actor(db.Model):
     __tablename__ = 'Actor'
@@ -130,4 +125,7 @@ class Actor(db.Model):
 
     def __repr__(self):
         return json.dumps(self.format())
+<<<<<<< HEAD
+=======
     
+>>>>>>> d1fab5fd685cf980f9b55fe28535442511782852
