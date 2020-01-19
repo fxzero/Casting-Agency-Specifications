@@ -125,7 +125,3 @@ class Actor(db.Model):
 
     def __repr__(self):
         return json.dumps(self.format())
-<<<<<<< HEAD
-=======
-    
->>>>>>> d1fab5fd685cf980f9b55fe28535442511782852
