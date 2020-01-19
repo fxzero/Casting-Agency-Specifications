@@ -223,7 +223,3 @@ def auth_error(error):
 
 if __name__ == '__main__':
     app.run()
-<<<<<<< HEAD
-=======
-    
->>>>>>> d1fab5fd685cf980f9b55fe28535442511782852
